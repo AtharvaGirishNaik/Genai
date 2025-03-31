@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science Behind GPT</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/x-icon" href="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/seb.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Color Palette */
+        :root {
+            --primary: #2A5C82;    /* Deep Blue */
+            --secondary: #4CAF50;  /* Fresh Green */
+            --accent: #FF6B6B;     /* Coral Red */
+            --text: #2D3436;       /* Dark Gray */
+            --background:#0d1b2a;; /* Light Background */
+            --highlight: #FFF3E0;  /* Soft Orange */
+            --dark-bg: #171717;    /* Dark Background */
+        }
+
+        /* background-color: 
+        color: white; */
+    
+        /* Base Styles */
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.8;
+            background-color: #0d1b2a;
+            color: white;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px
+        }
+    
+        .blog-post {
+            background-color: #0d1b2a;
+            color: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+    
+        h1 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            border-bottom: 4px solid var(--secondary);
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+    
+        h2 {
+            color: var(--primary);
+            margin: 2.5rem 0 1.5rem;
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+        }
+    
+        h3 {
+            color: var(--secondary);
+            font-size: 1.6rem;
+            margin: 2rem 0 1rem;
+            font-weight: 500;
+            text-align: center;
+        }
+    
+        /* Tables */
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            margin: 2rem auto;
+            background-color: #0d1b2a;
+            color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+    
+        th, td {
+            background-color: #0d1b2a;
+            color: white;
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+    
+        th {
+            background-color: #0d1b2a;
+            color: white;
+            font-weight: 600;
+        }
+    
+        tr:hover {
+            background-color: var(--highlight);
+        }
+    
+        /* Images */
+        .chart-img, .wide-img {
+            display: block;
+            margin: 2rem auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 100%;
+            height: auto;
+        }
+    
+        .chart-img {
+            max-width: 600px;
+        }
+    
+        /* Project Cards */
+        .project-card {
+            background: white;
+            padding: 2rem;
+            margin: 3rem auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            max-width: 1000px;
+        }
+    
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+    
+        .streamlit-embed {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem auto;
+        }
+    
+        .streamlit-embed iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            background-color: var(--dark-bg);
+            border-radius: 12px;
+        }
+    
+        .footer p {
+            margin: 0.5rem 0;
+            font-size: 1.25rem;
+            color: darkorange;
+            font-weight: 400;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+    
+            .blog-post {
+                padding: 2rem 1.5rem;
+            }
+    
+            h1 {
+                font-size: 2.2rem;
+            }
+    
+            h2 {
+                font-size: 1.8rem;
+            }
+    
+            .streamlit-embed iframe {
+                height: 400px;
+            }
+    
+            .footer p {
+                font-size: 1.1rem;
+            }
+        }
+    
+        /* Interactive Elements */
+        .underline {
+            background-image: linear-gradient(120deg, var(--accent) 0%, var(--accent) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.2em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+        }
+    
+        .model-comparison {
+            background: var(--highlight);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--secondary);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Rest of your body content remains the same -->
+    <!-- Keep all your existing article content here -->
+    <article class="blog-post">
+        <h1>The Science Behind GPT: How Large Language Models Learn and Generate Text</h1>
+        
+        <!-- Introduction Section -->
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>Large Language Models (LLMs) have transformed the field of Natural Language Processing (NLP), enabling machines to understand and generate human-like text. Two of the most influential models in this domain are <span class="underline">GPT (Generative Pre-trained Transformer)</span> and <span class="underline">BERT (Bidirectional Encoder Representations from Transformers)</span>.</p>
+            
+            <div class="model-comparison" style="background-color: #0d1b2a;
+            color: white;">
+                <p>While both models are based on the Transformer architecture, they serve different purposes:</p>
+                <ul>
+                    <li><strong>GPT</strong> is optimized for text generation by predicting the next word in a sequence.</li>
+                    <li><strong>BERT</strong> is designed for deep language understanding, excelling in classification and question answering tasks.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- GPT Learning Section -->
+        <section id="gpt-learning">
+            <h2>How Does GPT Learn?</h2>
+            <p>GPT learns through <span class="underline">self-supervised learning</span>, a training process that allows it to develop linguistic understanding without explicit human-labeled data. It is trained on vast corpora of text by learning to predict the next word given a sequence of previous words.</p>
+            
+            <div class="data-section">
+                <h3>1. The Data That Trains GPT</h3>
+                <p>The effectiveness of GPT largely depends on the diversity and scale of the data it is trained on. The dataset composition typically includes:</p>
+                
+                <table>
+                    <tr>
+                        <th>Data Source</th>
+                        <th>Percentage (%)</th>
+                    </tr>
+                    <tr>
+                        <td>Books</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr>
+                        <td>Wikipedia</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>News</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>Web Pages</td>
+                        <td>45%</td>
+                    </tr>
+                </table>
+                <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/img1.png" alt="Training data composition" class="chart-img">
+            </div>
+        </section>
+
+        <!-- Transformer Architecture Section -->
+        <section id="transformer-arch">
+            <h2>How GPT Understands Language: The Transformer Architecture</h2>
+            <p>GPT is built on the <span class="underline">Transformer</span> model, which enables it to process long sequences of text efficiently. The key innovation that powers Transformers is the <span class="underline">self-attention mechanism</span>, which allows the model to focus on the most relevant words in a sentence.</p>
+            
+            <div class="attention-section">
+                <h3>2. Self-Attention: How GPT Prioritizes Words</h3>
+                <p>Traditional NLP models processed text sequentially, which limited their ability to capture long-range dependencies. In contrast, the Transformer's self-attention mechanism dynamically assigns importance to different words, even those appearing far apart in a sentence.</p>
+                <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/img2.png" alt="Self-attention heatmap" class="wide-img">
+                <p>For example, in the sentence <em>&ldquo;The scientist who won the award gave an inspiring speech,&rdquo;</em> GPT assigns higher attention to <span class="underline">&ldquo;scientist&rdquo;</span> when predicting the word <span class="underline">&ldquo;speech&rdquo;</span>, recognizing their contextual relationship. This mechanism enables GPT to maintain <span class="underline">coherence and contextual awareness</span> over long passages.</p>
+            </div>
+        </section>
+
+        <!-- Text Generation Section -->
+        <section id="text-generation">
+            <h2>How GPT Generates Text: Probability and Prediction</h2>
+            <p>Text generation in GPT is a probabilistic process. Instead of simply choosing the most frequent next word, the model <span class="underline">assigns probabilities</span> to multiple possible words and selects the most suitable one based on the given context.</p>
+            
+            <div class="prediction-section">
+                <h3>3. Predicting the Next Word</h3>
+                <p>Given an input like:<br>
+                <em>&ldquo;Artificial Intelligence is shaping the...&rdquo;</em></p>
+                
+                <table>
+                    <tr>
+                        <th>Possible Next Word</th>
+                        <th>Probability (%)</th>
+                    </tr>
+                    <tr>
+                        <td>Technology</td>
+                        <td>40%</td>
+                    </tr>
+                    <tr>
+                        <td>Market</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr>
+                        <td>Economy</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Future</td>
+                        <td>15%</td>
+                    </tr>
+                </table>
+                <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/img3.png" alt="Word prediction visualization" class="wide-img">
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <h2>Project Integration: How We Demonstrate GPT and BERT in Action</h2>
+            <p>To provide a hands-on experience, we have deployed two interactive projects that highlight the differences between GPT and BERT in real-world applications.</p>
+            
+            <div class="project-card">
+                <h3>1. BERT vs. GPT: Tokenization and Understanding</h3>
+                <div class="streamlit-embed">
+                    <iframe 
+                        src="https://anaikgpt.streamlit.app/?embed=true" 
+                        title="GPT/BERT Tokenization Demo"
+                        height="600"
+                        style="border:none;"
+                        loading="lazy"
+                        allow="clipboard-write; geolocation; microphone; camera"
+                    ></iframe>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>2. Toxic Comment Classifier</h3>
+                <div class="streamlit-embed">
+                    <iframe 
+                        src="https://atharvanaikbert.streamlit.app/?embed=true" 
+                        title="Toxic Comment Classifier"
+                        height="600"
+                        style="border:none;"
+                        loading="lazy"
+                        allow="clipboard-write; geolocation; microphone; camera"
+                    ></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>GPT (Text Generation)</th>
+                    <th>BERT (Language Understanding)</th>
+                </tr>
+                <tr>
+                    <td>Primary Task</td>
+                    <td>Generates text</td>
+                    <td>Understands text</td>
+                </tr>
+                <tr>
+                    <td>Training Approach</td>
+                    <td>Predicts next word</td>
+                    <td>Analyzes full sentence</td>
+                </tr>
+                <tr>
+                    <td>Processing Direction</td>
+                    <td>Left-to-right (sequential)</td>
+                    <td>Bidirectional</td>
+                </tr>
+                <tr>
+                    <td>Best For</td>
+                    <td>Chatbots, content creation, summarization</td>
+                    <td>Classification, question answering, sentiment analysis</td>
+                </tr>
+            </table>
+
+            <div class="key-takeaways">
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li>GPT is designed for <span class="underline">text generation</span>, learning patterns from large datasets to predict coherent sequences</li>
+                    <li>BERT is optimized for <span class="underline">deep language understanding</span>, making it effective for classification and contextual analysis</li>
+                    <li>The self-attention mechanism in Transformers allows both models to <span class="underline">interpret text more accurately</span> than previous NLP models</li>
+                </ul>
+            </div>
+        </section>
+    </article>
+    
+    <script>
+        // Enhanced JavaScript with smooth transitions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scroll behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Add animation to tables
+            document.querySelectorAll('table').forEach(table => {
+                table.style.opacity = '0';
+                table.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    table.style.transition = 'all 0.4s ease-out';
+                    table.style.opacity = '1';
+                    table.style.transform = 'translateY(0)';
+                }, 200);
+            });
+
+            // Initialize Chart.js if needed
+            // Example chart initialization:
+            const ctx = document.getElementById('myChart');
+            if(ctx) {
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Books', 'Wikipedia', 'News', 'Web Pages'],
+                        datasets: [{
+                            label: 'Training Data Composition',
+                            data: [30, 10, 15, 45],
+                            backgroundColor: [
+                                'rgba(42, 92, 130, 0.8)',
+                                'rgba(76, 175, 80, 0.8)',
+                                'rgba(255, 107, 107, 0.8)',
+                                'rgba(255, 159, 64, 0.8)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+<div class="footer" style="font-size: x-large;font-weight: 400;color: darkorange; background-color: rgb(23, 23, 23);border-radius:12px ;justify-content: center;">
+    <p>Creators: Atharva Naik (124B2B011) </p>
+    <p> Anant Bansode (123B1B089)</p>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+</head>
+<body>
+    <article>
+        
+        
+        <section>
+            <h2>Introduction</h2>
+            <p>Large Language Models (LLMs) have transformed the field of Natural Language Processing (NLP), enabling machines to understand and generate human-like text. Two of the most influential models in this domain are GPT (Generative Pre-trained Transformer) and BERT (Bidirectional Encoder Representations from Transformers).</p>
+            
+            <div>
+                <p>While both models are based on the Transformer architecture, they serve different purposes:</p>
+                <ul>
+                    <li><strong>GPT</strong> is optimized for text generation by predicting the next word in a sequence.</li>
+                    <li><strong>BERT</strong> is designed for deep language understanding, excelling in classification and question answering tasks.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>How Does GPT Learn?</h2>
+            <p>GPT learns through self-supervised learning, a training process that allows it to develop linguistic understanding without explicit human-labeled data. It is trained on vast corpora of text by learning to predict the next word given a sequence of previous words.</p>
+            
+            <div>
+                <h3>1. The Data That Trains GPT</h3>
+                <p>The effectiveness of GPT largely depends on the diversity and scale of the data it is trained on. The dataset composition typically includes:</p>
+                
+                <table>
+                    <tr>
+                        <th>Data Source</th>
+                        <th>Percentage (%)</th>
+                    </tr>
+                    <tr>
+                        <td>Books</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr>
+                        <td>Wikipedia</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td>News</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td>Web Pages</td>
+                        <td>45%</td>
+                    </tr>
+                </table>
+                <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/img1.png" alt="Training data composition"width="800" 
+                height="500">
+            </div>
+        </section>
+
+        <section>
+            <h2>How GPT Understands Language: The Transformer Architecture</h2>
+            <p>GPT is built on the Transformer model, which enables it to process long sequences of text efficiently. The key innovation that powers Transformers is the self-attention mechanism, which allows the model to focus on the most relevant words in a sentence.</p>
+            
+            <div>
+                <h3>2. Self-Attention: How GPT Prioritizes Words</h3>
+                <p>Traditional NLP models processed text sequentially, which limited their ability to capture long-range dependencies. In contrast, the Transformer's self-attention mechanism dynamically assigns importance to different words, even those appearing far apart in a sentence.</p>
+                <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/img2.png" alt="Self-attention heatmap"width="800" 
+                height="500">
+                <p>For example, in the sentence "The scientist who won the award gave an inspiring speech," GPT assigns higher attention to "scientist" when predicting the word "speech", recognizing their contextual relationship. This mechanism enables GPT to maintain coherence and contextual awareness over long passages.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>How GPT Generates Text: Probability and Prediction</h2>
+            <p>Text generation in GPT is a probabilistic process. Instead of simply choosing the most frequent next word, the model assigns probabilities to multiple possible words and selects the most suitable one based on the given context.</p>
+            
+            <div>
+                <h3>3. Predicting the Next Word</h3>
+                <p>Given an input like:<br>
+                "Artificial Intelligence is shaping the..."</p>
+                
+                <table>
+                    <tr>
+                        <th>Possible Next Word</th>
+                        <th>Probability (%)</th>
+                    </tr>
+                    <tr>
+                        <td>Technology</td>
+                        <td>40%</td>
+                    </tr>
+                    <tr>
+                        <td>Market</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr>
+                        <td>Economy</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr>
+                        <td>Future</td>
+                        <td>15%</td>
+                    </tr>
+                </table>
+                <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/img3.png" alt="Word prediction visualization"width="600" 
+                height="500">
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+<section id="projects">
+    <h2>Project Integration: How We Demonstrate GPT and BERT in Action</h2>
+    <p>To provide a hands-on experience, we have deployed two interactive projects that highlight the differences between GPT and BERT in real-world applications.</p>
+    <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/toxic_comment_classification_flowchart-1.png" 
+                 alt="Toxicity Classifier Preview" 
+                 width="400" 
+                 height="400"
+                 style="display: block; margin: 0 auto;">
+    
+    <div class="project-card">
+        <h3>1. BERT vs. GPT: Tokenization and Understanding</h3>
+        <a href="https://anaikgpt.streamlit.app/" target="_blank">
+            <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/i2.png" 
+                 alt="GPT/BERT Tokenization Demo Preview" 
+                 width="600" 
+                 height="500"
+                 style="display: block; margin: 0 auto;">
+        </a>
+        <p style="text-align: center; margin-top: 10px;">
+            <a href="https://anaikgpt.streamlit.app/" target="_blank">Explore Live Demo →</a>
+        </p>
+    </div>
+
+    <div class="project-card">
+        <h3>2. Toxic Comment Classifier</h3>
+        <a href="https://atharvanaikbert.streamlit.app/" target="_blank">
+            <img src="https://freedomain8844.wordpress.com/wp-content/uploads/2025/03/i1.png" 
+                 alt="Toxicity Classifier Preview" 
+                 width="600" 
+                 height="500"
+                 style="display: block; margin: 0 auto;">
+        </a>
+        <p style="text-align: center; margin-top: 10px;">
+            <a href="https://atharvanaikbert.streamlit.app/" target="_blank">Test Live Classifier →</a>
+        </p>
+    </div>
+</section>
+
+        <section>
+            <h2>Conclusion</h2>
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>GPT (Text Generation)</th>
+                    <th>BERT (Language Understanding)</th>
+                </tr>
+                <tr>
+                    <td>Primary Task</td>
+                    <td>Generates text</td>
+                    <td>Understands text</td>
+                </tr>
+                <tr>
+                    <td>Training Approach</td>
+                    <td>Predicts next word</td>
+                    <td>Analyzes full sentence</td>
+                </tr>
+                <tr>
+                    <td>Processing Direction</td>
+                    <td>Left-to-right (sequential)</td>
+                    <td>Bidirectional</td>
+                </tr>
+                <tr>
+                    <td>Best For</td>
+                    <td>Chatbots, content creation, summarization</td>
+                    <td>Classification, question answering, sentiment analysis</td>
+                </tr>
+            </table>
+
+            <div>
+                <h3>Key Takeaways</h3>
+                <ul>
+                    <li>GPT is designed for text generation, learning patterns from large datasets to predict coherent sequences</li>
+                    <li>BERT is optimized for deep language understanding, making it effective for classification and contextual analysis</li>
+                    <li>The self-attention mechanism in Transformers allows both models to interpret text more accurately than previous NLP models</li>
+                </ul>
+            </div>
+        </section>
+    </article>
+
+    <div>
+        <p>Creators:</p> 
+        <p>Atharva Naik (124B2B011)</p>
+        <p>Anant Bansode (123B1B089)</p>
+    </div>
+</body>
+</html>
